@@ -6,7 +6,7 @@ on the French Riviera instead of overcrowded hotspots.
 Built to fight overtourism.
 
 ## Live Demo
-[hiddenriviera.netlify.app](link-ul tău)
+[hiddenriviera.netlify.app](https://hiddenriviera.netlify.app)
 
 ## Built With
 - React
