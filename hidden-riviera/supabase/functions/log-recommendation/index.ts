@@ -11,21 +11,27 @@ const productionOrigin = Deno.env.get("ALLOWED_ORIGIN");
 
 function getCorsHeaders(request: Request) {
   const origin = request.headers.get("origin") || "";
-  const devOrigins = new Set([
+  const allowedOrigins = new Set([
+    "https://hiddenriviera.netlify.app",
     "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:4173",
-    "http://127.0.0.1:4173",
-  ]);
-  const allowedOrigins = new Set([productionOrigin, ...devOrigins].filter(Boolean));
-  const allowOrigin = allowedOrigins.has(origin) ? origin : productionOrigin || "http://localhost:5173";
-
-  return {
-    "Access-Control-Allow-Origin": allowOrigin,
+    "http://localhost:5174",
+    productionOrigin,
+  ].filter(Boolean));
+  const headers: Record<string, string> = {
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Vary": "Origin",
   };
+
+  if (allowedOrigins.has(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin;
+  }
+
+  return headers;
+}
+
+function isAllowedOrigin(request: Request) {
+  return Boolean(getCorsHeaders(request)["Access-Control-Allow-Origin"]);
 }
 
 function jsonResponse(request: Request, body: Record<string, unknown>, status = 200) {
@@ -94,11 +100,22 @@ function validatePayload(payload: unknown) {
 
 Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
+    if (!isAllowedOrigin(request)) {
+      return new Response("Forbidden origin.", {
+        status: 403,
+        headers: getCorsHeaders(request),
+      });
+    }
+
     return new Response("ok", { headers: getCorsHeaders(request) });
   }
 
   if (request.method !== "POST") {
     return jsonResponse(request, { error: "Method not allowed." }, 405);
+  }
+
+  if (!isAllowedOrigin(request)) {
+    return jsonResponse(request, { error: "Forbidden origin." }, 403);
   }
 
   if (!supabaseUrl || !serviceRoleKey) {
