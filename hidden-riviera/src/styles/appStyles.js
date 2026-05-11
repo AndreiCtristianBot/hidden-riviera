@@ -173,6 +173,8 @@ box-sizing: border-box;
 .tc-b{padding:13px 15px}
 .tc-n{font-size:14.5px;font-weight:600;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
 .tc-d{font-size:12px;color:#666;line-height:1.55;margin-bottom:9px;font-weight:300}
+.tc-rec{font-size:10.5px;color:#777;line-height:1.45;margin:-2px 0 10px;font-weight:300}
+.tc-rec span{display:block;color:var(--ink);font-size:9px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin-bottom:2px}
 .tc-f{display:flex;gap:6px;flex-wrap:wrap}
 .p{padding:3px 9px;border-radius:100px;font-size:9.5px;font-weight:600;letter-spacing:.2px}
 .p-d{background:var(--ghost);color:var(--smoke)}
@@ -189,6 +191,9 @@ box-sizing: border-box;
 .m h3{font-family:var(--fd);font-size:24px;margin-bottom:8px}
 .m p{color:#555;line-height:1.7;font-size:14px;margin-bottom:14px;font-weight:300}
 .m-mt{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.rec{background:rgba(200,164,78,.08);border:1px solid rgba(200,164,78,.16);border-radius:12px;padding:12px 13px;margin:0 0 14px;text-align:left}
+.rec-t{font-size:9px;text-transform:uppercase;letter-spacing:1.4px;color:var(--gold);font-weight:700;margin-bottom:5px}
+.rec-s{font-size:13px;line-height:1.55;color:#444;font-weight:400}
 
 .wm{text-align:center;padding:18px var(--pad) 44px;font-size:11.5px;color:var(--smoke);font-weight:300}
 .wm b{color:var(--gold);font-weight:600}

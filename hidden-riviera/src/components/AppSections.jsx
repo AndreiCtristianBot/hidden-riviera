@@ -92,6 +92,7 @@ export function LoadingScreen() {
 
 function StopModal({ stop, onClose }) {
   if (!stop) return null;
+  const signals = stop.recommendationSignals || [];
 
   return (
     <div className="mbg" onClick={onClose}>
@@ -108,6 +109,12 @@ function StopModal({ stop, onClose }) {
             <span className="p p-d">🕐 {stop.time}</span>
           </div>
           <p>{stop.desc}</p>
+          {signals.length ? (
+            <div className="rec">
+              <div className="rec-t">Recommended today because:</div>
+              <div className="rec-s">{signals.join(" · ")}</div>
+            </div>
+          ) : null}
           <button className="btn btn-d" onClick={onClose}>
             Got it
           </button>
@@ -125,7 +132,7 @@ export function ResultView({ itinerary, onReset }) {
   const currentDay = itinerary.days[dayIndex];
   const allStops = itinerary.days.flatMap((day) => day.stops);
   const hiddenGems = allStops.filter(
-    (stop) => stop.crowd === "very low" || stop.crowd === "low"
+    (stop) => stop.type !== "transit" && (stop.crowd === "very low" || stop.crowd === "low")
   ).length;
 
   return (
@@ -184,6 +191,12 @@ export function ResultView({ itinerary, onReset }) {
                   <span style={{ fontSize: 12, opacity: 0.25 }}>→</span>
                 </div>
                 <div className="tc-d">{stop.desc}</div>
+                {stop.recommendationSignals?.length ? (
+                  <div className="tc-rec">
+                    <span>Recommended today because:</span>
+                    {stop.recommendationSignals.join(" · ")}
+                  </div>
+                ) : null}
                 <div className="tc-f">
                   <CrowdPill crowd={stop.crowd} />
                   <span className="p p-d">⏱ {stop.dur}</span>

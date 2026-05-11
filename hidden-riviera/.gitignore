@@ -1,3 +1,8 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log
@@ -8,9 +13,17 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+node_modules/
+dist/
 dist
 dist-ssr
 *.local
+
+# Netlify
+.netlify
+
+# Supabase
+supabase/.temp/
 
 # Editor directories and files
 .vscode/*
